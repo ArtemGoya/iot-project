@@ -1,11 +1,6 @@
-
-from msilib.schema import Property
-from tkinter import SW
-
-from black import Ok
 from PhysicalPeriphery import *
 from enum import Enum
-import Services.MqttClientService as mqtt_client
+#import Services.MqttClientService as mqtt_client
 
 # tryby otwarcia okna
 

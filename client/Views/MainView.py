@@ -23,7 +23,13 @@ class MainView(tk.Frame):
         """
         pass
 
-    def set_sensors_data():
+    def set_sensors_data(self,
+                         in_temperatura: float, in_wilgotnosc: float, in_jasnosc: float,
+                         out_temperatura: float, out_wilgotnosc: float,
+                         out_wiatr: float, out_jasnosc: float,
+                         okna_otwarte: bool, swiatla_wlaczone: bool
+                         ):
         """
         Sluzy do aktualizacji na widoku informacji o stanie czujnikow
         """
+        pass

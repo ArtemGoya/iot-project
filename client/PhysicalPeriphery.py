@@ -23,6 +23,7 @@ if not SIMULATION_MODE:
     import busio
     import adafruit_bme280.advanced as adafruit_bme280
 
+
 def bme280():
    i2c = busio.I2C(board.SCL, board.SDA)
    bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, 0x76)
@@ -58,6 +59,11 @@ def get_external_sensors_data() -> tuple[float, float, float, float]:
     """
     temperatura, wilgotnosc, wiatr, swiatlo
     """
+    global SIMULATION_EXTERNAL_TEMPERATURE
+    global SIMULATION_EXTERNAL_HUMIDITY
+    global SIMULATION_EXTERNAL_LIGHTING
+    global SIMULATION_EXTERNAL_WIND
+    
     if SIMULATION_MODE:
         resolve_simulation_day()
         if SIMULATION_DAY:
@@ -80,6 +86,10 @@ def get_internal_sensors_data() -> tuple[float, float, float]:
     """
     temperatura, wilgotnosc, swiatlo,
     """
+    global SIMULATION_INTERNAL_TEMPERATURE
+    global SIMULATION_INTERNAL_HUMIDITY
+    global SIMULATION_INTERNAL_LIGHTING
+    
     if SIMULATION_MODE:
         resolve_simulation_day()
         if SIMULATION_DAY:

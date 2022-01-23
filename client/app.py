@@ -32,3 +32,4 @@ if __name__ == '__main__':
 
     app.after(LOOP_INTERVAL, runLoop)
     app.mainloop()
+
