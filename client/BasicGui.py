@@ -18,7 +18,7 @@ class BasicGui(tk.Frame):
         self.parent.protocol("WM_DELETE_WINDOW", self.file_quit)
         self.parent.resizable(width=False, height=False)
         # self.domyslne = self.konfig["DEFAULT"]
-        self.geometria_baza = "955x775+204+118"
+        self.geometria_baza = "840x775+204+118"
         self.parent.geometry(self.geometria_baza)
         self.utworz_bazowe_menu()
         self.utworz_status()
