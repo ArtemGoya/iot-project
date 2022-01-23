@@ -4,19 +4,15 @@ from Views.MainView import MainView
 from Services.GalleryManagerService import GelleryManagerService
 from BasicGui import BasicGui
 
-LOOP_INTERVAL = 1_000
+LOOP_INTERVAL = 500
 
-class App(BasicGui):
-    pass
-    
-        
+
 if __name__ == '__main__':
     root = Tk()
     root.title("System monitorowania i kontroli środowiska galerii")
-    app = App(master=root)
     galery_manager = GelleryManagerService()
 
-    view = MainView(app)
+    view = MainView(root)
     controller = MainController(view, galery_manager)
     view.set_controller(controller)
 
@@ -26,8 +22,7 @@ if __name__ == '__main__':
 
     def runLoop():
         loop()
-        app.after(LOOP_INTERVAL, runLoop)
+        root.after(LOOP_INTERVAL, runLoop)
 
-    app.after(LOOP_INTERVAL, runLoop)
-    app.mainloop()
-
+    root.after(LOOP_INTERVAL, runLoop)
+    root.mainloop()
