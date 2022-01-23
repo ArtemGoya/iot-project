@@ -83,14 +83,26 @@ class App(BasicGui):
         lightningModeLabel = Label(peripheralsData, width=15, height=2, text="Tryb:", font =("Helvetica", 12), bg=self.color)
         lightningModeLabel.grid(row=3, column=0, columnspan=1)
         
-        WindowsLabel = Label(peripheralsData, width=20, height=2, text="Okiennice:", font =("Helvetica", 20), bg=self.color)
-        WindowsLabel.grid(row=4, column=0, columnspan=2)
-        WindowsStateLabel = Label(peripheralsData, width=15, height=2, text="Stan:", font =("Helvetica", 12), bg=self.color)
-        WindowsStateLabel.grid(row=5, column=0, columnspan=1)
-        WindowsStateValLabel = Label(peripheralsData, width=15, height=2, text="Otwarte", font =("Helvetica", 12), bg=self.color)
-        WindowsStateValLabel.grid(row=5, column=1, columnspan=1)
-        WindowsModeLabel = Label(peripheralsData, width=15, height=2, text="Tryb:", font =("Helvetica", 12), bg=self.color)
-        WindowsModeLabel.grid(row=6, column=0, columnspan=1)
+        variable1 = StringVar(peripheralsData)
+        variable1.set("Automatyczny") # default value
+
+        w = OptionMenu(peripheralsData, variable1, "Automatyczny", "Włączone", "Wyłączone")
+        w.grid(row=3, column=1, columnspan=1)
+        
+        windowsLabel = Label(peripheralsData, width=20, height=2, text="Okiennice:", font =("Helvetica", 20), bg=self.color)
+        windowsLabel.grid(row=4, column=0, columnspan=2)
+        windowsStateLabel = Label(peripheralsData, width=15, height=2, text="Stan:", font =("Helvetica", 12), bg=self.color)
+        windowsStateLabel.grid(row=5, column=0, columnspan=1)
+        windowsStateValLabel = Label(peripheralsData, width=15, height=2, text="Otwarte", font =("Helvetica", 12), bg=self.color)
+        windowsStateValLabel.grid(row=5, column=1, columnspan=1)
+        windowsModeLabel = Label(peripheralsData, width=15, height=2, text="Tryb:", font =("Helvetica", 12), bg=self.color)
+        windowsModeLabel.grid(row=6, column=0, columnspan=1)
+        
+        variable2 = StringVar(peripheralsData)
+        variable2.set("Automatyczny") # default value
+
+        w = OptionMenu(peripheralsData, variable2, "Automatyczny", "Otwarte", "Zamknięte")
+        w.grid(row=6, column=1, columnspan=1)
         
         Label(peripheralsData, width=15, height=9, text="", font =("Helvetica", 12), bg=self.color).grid(row=7, column=1, columnspan=1)
 
