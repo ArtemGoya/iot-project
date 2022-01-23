@@ -13,10 +13,10 @@ class MainController():
             self.__notify_gamlery_manager_state_changed)
 
     def handle_window_chnage_mode(self, mode: Okna):
-        pass
+        self.galery_manager.set_tryb_okien(mode)
 
     def handle_lights_change_mode(self, mode: Swiatla):
-        pass
+        self.galery_manager.set_tryb_swiatel(mode)
 
     def __notify_gamlery_manager_state_changed(self):
         """
