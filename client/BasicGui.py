@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 import tkinter.messagebox
 from tkinter.constants import NSEW
 import configparser
@@ -31,7 +32,103 @@ class BasicGui(tk.Frame):
         self.parent.rowconfigure(2, weight=1)
 
     def gallery(self):
-        pass
+        self.color = "SystemButtonFace"
+        
+        self.createLayout()
+        
+        
+    def createLayout(self):
+        title=Frame(self.robocze, height=90, background="#fff")
+        title.grid(column=0, row=0, rowspan=1, columnspan=4)
+        self.titleVal = Label(title, height=4, text="Galeria handlowa Amber", font =("Helvetica", 25), bg="#fff")
+        self.titleVal.grid(row=3, column=0, columnspan=1)
+        Frame(self.robocze, height=20, width=55, background="#fff").grid(column=0, row=1, rowspan=1)
+        self.createLeftFrame()
+        Frame(self.robocze, height=50, width=55, background="#fff").grid(column=2, row=1, rowspan=1)
+        self.createRightFrame()
+        
+    
+    def createLeftFrame(self):
+        detectorsData = Frame(self.robocze, height=600, width=400, background=self.color, highlightbackground="black", highlightthickness=2)
+        detectorsData.grid(column=1, row=1, rowspan=1)
+        detectorsLabel = Label(detectorsData, width=15, height=3, text="Dane z czujników", font =("Helvetica", 15), bg=self.color)
+        detectorsLabel.grid(row=0, column=0, columnspan=2)
+        outDetectorsLabel = Label(detectorsData, width=20, height=2, text="Zewnątrz:", font =("Helvetica", 20), bg=self.color)
+        outDetectorsLabel.grid(row=1, column=0, columnspan=2)
+        outTempLabel = Label(detectorsData, width=15, height=2, text="Temperatura:", font =("Helvetica", 12), bg=self.color)
+        outTempLabel.grid(row=2, column=0, columnspan=1)
+        self.outTempValLabel = Label(detectorsData, width=15, height=2, text="0*C", font =("Helvetica", 12), bg=self.color)
+        self.outTempValLabel.grid(row=2, column=1, columnspan=1)
+        outHumLabel = Label(detectorsData, width=15, height=2, text="Wilgotność:", font =("Helvetica", 12), bg=self.color)
+        outHumLabel.grid(row=3, column=0, columnspan=1)
+        self.outHumValLabel = Label(detectorsData, width=15, height=2, text="32%", font =("Helvetica", 12), bg=self.color)
+        self.outHumValLabel.grid(row=3, column=1, columnspan=1)
+        outLightLabel = Label(detectorsData, width=15, height=2, text="Oświetlenie:", font =("Helvetica", 12), bg=self.color)
+        outLightLabel.grid(row=4, column=0, columnspan=1)
+        self.outLightValLabel = Label(detectorsData, width=15, height=2, text="250 lux", font =("Helvetica", 12), bg=self.color)
+        self.outLightValLabel.grid(row=4, column=1, columnspan=1)
+        outWindLabel = Label(detectorsData, width=15, height=2, text="Temperatura:", font =("Helvetica", 12), bg=self.color)
+        outWindLabel.grid(row=5, column=0, columnspan=1)
+        self.outWindValLabel = Label(detectorsData, width=15, height=2, text="0*C", font =("Helvetica", 12), bg=self.color)
+        self.outWindValLabel.grid(row=5, column=1, columnspan=1)
+        
+        inDetectorsLabel = Label(detectorsData, width=20, height=2, text="Wewnątrz:", font =("Helvetica", 20), bg=self.color)
+        inDetectorsLabel.grid(row=6, column=0, columnspan=2)
+        inTempLabel = Label(detectorsData, width=15, height=2, text="Temperatura:", font =("Helvetica", 12), bg=self.color)
+        inTempLabel.grid(row=7, column=0, columnspan=1)
+        self.inTempValLabel = Label(detectorsData, width=15, height=2, text="23*C", font =("Helvetica", 12), bg=self.color)
+        self.inTempValLabel.grid(row=7, column=1, columnspan=1)
+        inHumLabel = Label(detectorsData, width=15, height=2, text="Wilgotność:", font =("Helvetica", 12), bg=self.color)
+        inHumLabel.grid(row=8, column=0, columnspan=1)
+        self.inHumValLabel = Label(detectorsData, width=15, height=2, text="20%", font =("Helvetica", 12), bg=self.color)
+        self.inHumValLabel.grid(row=8, column=1, columnspan=1)
+        inLightLabel = Label(detectorsData, width=15, height=2, text="Oświetlenie:", font =("Helvetica", 12), bg=self.color)
+        inLightLabel.grid(row=9, column=0, columnspan=1)
+        self.inLightValLabel = Label(detectorsData, width=15, height=2, text="500 lux", font =("Helvetica", 12), bg=self.color)
+        self.inLightValLabel.grid(row=9, column=1, columnspan=1)
+        
+        Label(detectorsData, width=15, height=2, text="", font =("Helvetica", 12), bg=self.color).grid(row=10, column=1, columnspan=1)
+        
+        
+        
+
+    def createRightFrame(self):
+        peripheralsData = Frame(self.robocze, height=600, width=400, background=self.color, highlightbackground="black", highlightthickness=2)
+        peripheralsData.grid(column=3, row=1, rowspan=1)
+        periphealsLabel = Label(peripheralsData, width=15, height=3, text="Kontrola", font =("Helvetica", 15), bg=self.color)
+        periphealsLabel.grid(row=0, column=0, columnspan=2)
+        lightingLabel = Label(peripheralsData, width=20, height=2, text="Oświetlenie:", font =("Helvetica", 20), bg=self.color)
+        lightingLabel.grid(row=1, column=0, columnspan=2)
+        lightingStateLabel = Label(peripheralsData, width=15, height=2, text="Stan:", font =("Helvetica", 12), bg=self.color)
+        lightingStateLabel.grid(row=2, column=0, columnspan=1)
+        self.lightingStateValLabel = Label(peripheralsData, width=15, height=2, text="Włączone", font =("Helvetica", 12), bg=self.color)
+        self.lightingStateValLabel.grid(row=2, column=1, columnspan=1)
+        lightingModeLabel = Label(peripheralsData, width=15, height=2, text="Tryb:", font =("Helvetica", 12), bg=self.color)
+        lightingModeLabel.grid(row=3, column=0, columnspan=1)
+        
+        self.lightingModeVal = StringVar(peripheralsData)
+        self.lightingModeVal.set("Automatyczny") # default value
+
+        lightningOptionMenu = OptionMenu(peripheralsData, self.lightingModeVal, "Automatyczny", "Włączone", "Wyłączone")
+        lightningOptionMenu.grid(row=3, column=1, columnspan=1)
+        
+        windowsLabel = Label(peripheralsData, width=20, height=2, text="Okiennice:", font =("Helvetica", 20), bg=self.color)
+        windowsLabel.grid(row=4, column=0, columnspan=2)
+        windowsStateLabel = Label(peripheralsData, width=15, height=2, text="Stan:", font =("Helvetica", 12), bg=self.color)
+        windowsStateLabel.grid(row=5, column=0, columnspan=1)
+        self.windowsStateValLabel = Label(peripheralsData, width=15, height=2, text="Otwarte", font =("Helvetica", 12), bg=self.color)
+        self.windowsStateValLabel.grid(row=5, column=1, columnspan=1)
+        windowsModeLabel = Label(peripheralsData, width=15, height=2, text="Tryb:", font =("Helvetica", 12), bg=self.color)
+        windowsModeLabel.grid(row=6, column=0, columnspan=1)
+        
+        self.windowsModeVal = StringVar(peripheralsData)
+        self.windowsModeVal.set("Automatyczny") # default value
+
+        windowsOptionMenu = OptionMenu(peripheralsData, self.windowsModeVal, "Automatyczny", "Otwarte", "Zamknięte")
+        windowsOptionMenu.grid(row=6, column=1, columnspan=1)
+        
+        Label(peripheralsData, width=15, height=9, text="", font =("Helvetica", 12), bg=self.color).grid(row=7, column=1, columnspan=1)
+
 
     # Creates status bar
     def utworz_status(self):
