@@ -19,15 +19,15 @@ def process_message(client, userdata, message):
     ):
     # temp_external, hum_external, light_external, wind_external, temp_internal, hum_internal, light_internal, is_opened_windows, is_light_on
         print("Saving data: " + time.ctime() + ", " + 
-        message_decoded[0] + "," +
-        message_decoded[1] + "," +
-        message_decoded[2] + "," +
-        message_decoded[3] + "," +
-        message_decoded[4] + "," +
-        message_decoded[5] + "," +
-        message_decoded[6] + "," +
-        message_decoded[7] + "," +
-        message_decoded[8])
+        str(message_decoded[0]) + "," +
+        str(message_decoded[1]) + "," +
+        str(message_decoded[2]) + "," +
+        str(message_decoded[3]) + "," +
+        str(message_decoded[4]) + "," +
+        str(message_decoded[5]) + "," +
+        str(message_decoded[6]) + "," +
+        str(message_decoded[7]) + "," +
+        str(message_decoded[8])
 
         # Save to sqlite database.
         connention = sqlite3.connect("database.db")
