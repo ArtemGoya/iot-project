@@ -1,4 +1,3 @@
-
 from tkinter import *
 from Controllers.MainController import MainController
 from Views.MainView import MainView
@@ -41,14 +40,14 @@ if __name__ == '__main__':
     root.title("System monitorowania i kontroli środowiska galerii")
     app = App(master=root)
     galery_manager = GelleryManagerService()
+
     view = MainView(app)
     controller = MainController(view, galery_manager)
     view.set_controller(controller)
 
-
     def loop():
         galery_manager.loop()
-        print("test")
+        print("main loop tick")
 
     def runLoop():
         loop()
@@ -56,3 +55,4 @@ if __name__ == '__main__':
 
     app.after(LOOP_INTERVAL, runLoop)
     app.mainloop()
+
