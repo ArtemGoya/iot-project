@@ -54,6 +54,19 @@ def resolve_simulation_day():
     if SIMULATION_EXTERNAL_TEMPERATURE == SIMULATION_EXTERNAL_TEMPERATURE_MIN:
         SIMULATION_DAY = True
 
+def print_data_from_external_sensors(temp, hum, light, wind, simulated):
+    if simulated:
+        print("Retrieved simulated data from external sensors: temp: " + temp + ", hum: " + hum + ", light: " + light +", wind: " + wind)
+    else:
+        print("Retrieved data from external sensors: temp: " + temp + ", hum: " + hum + ", light: " + light +", wind: " + wind)
+    
+
+def print_data_from_internal_sensors(temp, hum, light, simulated):
+    if simulated:
+        print("Retrieved simulated data from internal sensors: temp: " + temp + ", hum: " + hum + ", light: " + light)
+    else:
+        print("Retrieved data from internal sensors: temp: " + temp + ", hum: " + hum + ", light: " + light)
+
 
 def get_external_sensors_data() -> tuple[float, float, float, float]:
     """
@@ -71,15 +84,18 @@ def get_external_sensors_data() -> tuple[float, float, float, float]:
             SIMULATION_EXTERNAL_HUMIDITY += 0.01
             SIMULATION_EXTERNAL_LIGHTING += 100.0
             SIMULATION_EXTERNAL_WIND += 1.0
+            print_data_from_external_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_LIGHTING, SIMULATION_EXTERNAL_WIND)
             return SIMULATION_EXTERNAL_TEMPERATURE,SIMULATION_EXTERNAL_HUMIDITY,SIMULATION_EXTERNAL_LIGHTING,SIMULATION_EXTERNAL_WIND
         else:
             SIMULATION_EXTERNAL_TEMPERATURE -= 1.0
             SIMULATION_EXTERNAL_HUMIDITY -= 0.01
             SIMULATION_EXTERNAL_LIGHTING -= 100.0
             SIMULATION_EXTERNAL_WIND -= 1.0
+            print_data_from_external_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_LIGHTING, SIMULATION_EXTERNAL_WIND)
             return SIMULATION_EXTERNAL_TEMPERATURE,SIMULATION_EXTERNAL_HUMIDITY,SIMULATION_EXTERNAL_LIGHTING,SIMULATION_EXTERNAL_WIND
     else:
         temp, hum = bme280()
+        print_data_from_external_sensors(temp, hum, 0.0, 0.0)
         return temp, hum, 0.0, 0.0
 
 def get_internal_sensors_data() -> tuple[float, float, float]:
@@ -96,14 +112,17 @@ def get_internal_sensors_data() -> tuple[float, float, float]:
             SIMULATION_INTERNAL_TEMPERATURE += 0.25
             SIMULATION_INTERNAL_HUMIDITY += 0.01
             SIMULATION_INTERNAL_LIGHTING += 100.0
+            print_data_from_internal_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_LIGHTING)
             return SIMULATION_INTERNAL_TEMPERATURE,SIMULATION_INTERNAL_HUMIDITY,SIMULATION_INTERNAL_LIGHTING
         else:
             SIMULATION_INTERNAL_TEMPERATURE -= 0.25
             SIMULATION_INTERNAL_HUMIDITY -= 0.01
             SIMULATION_INTERNAL_LIGHTING -= 100.0
+            print_data_from_internal_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_LIGHTING)
             return SIMULATION_INTERNAL_TEMPERATURE,SIMULATION_INTERNAL_HUMIDITY,SIMULATION_INTERNAL_LIGHTING
     else:
         temp = ds18b20()
+        print_data_from_internal_sensors(temp, 0.0, 0.0)
         return temp, 0.0, 0.0
 
 
