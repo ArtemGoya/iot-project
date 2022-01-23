@@ -5,6 +5,7 @@ from Services.GalleryManagerService import GelleryManagerService
 
 LOOP_INTERVAL = 1_000
 
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -14,15 +15,16 @@ class App(tk.Tk):
 
 if __name__ == '__main__':
     app = App()
+
     galery_manager = GelleryManagerService()
+
     view = MainView(app)
     controller = MainController(view, galery_manager)
     view.set_controller(controller)
 
-
     def loop():
         galery_manager.loop()
-        print("test")
+        print("main loop tick")
 
     def runLoop():
         loop()

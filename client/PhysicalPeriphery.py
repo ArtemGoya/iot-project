@@ -1,31 +1,119 @@
 """
     Tu znajdą się metody do interakcji z fizycznymi peryferiami
 """
+SIMULATION_MODE = True
 
+SIMULATION_EXTERNAL_TEMPERATURE = 10.0
+SIMULATION_EXTERNAL_TEMPERATURE_MAX = 22.0
+SIMULATION_EXTERNAL_TEMPERATURE_MIN = 10.0
+SIMULATION_EXTERNAL_HUMIDITY = 50.0
+SIMULATION_EXTERNAL_LIGHTING = 400.0
+SIMULATION_EXTERNAL_WIND = 10.0
+
+SIMULATION_INTERNAL_TEMPERATURE = 18.0
+SIMULATION_INTERNAL_HUMIDITY = 50.0
+SIMULATION_INTERNAL_LIGHTING = 1000.0
+
+SIMULATION_DAY = True
+
+if not SIMULATION_MODE:
+    import config as cfg
+    import w1thermsensor
+    import board
+    import busio
+    import adafruit_bme280.advanced as adafruit_bme280
+
+def bme280():
+   i2c = busio.I2C(board.SCL, board.SDA)
+   bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, 0x76)
+
+   bme280.sea_level_pressure = 1013.25
+   bme280.standby_period = adafruit_bme280.STANDBY_TC_500
+   bme280.iir_filter = adafruit_bme280.IIR_FILTER_X16
+   bme280.overscan_pressure = adafruit_bme280.OVERSCAN_X16
+   bme280.overscan_humidity = adafruit_bme280.OVERSCAN_X1
+   bme280.overscan_temperature = adafruit_bme280.OVERSCAN_X2
+
+#    print("\nBME280:")
+#    print(f"Temperature: {bme280.temperature:0.1f} ’+chr(176)+’C")
+#    print(f"Humidity: {bme280.humidity:0.1f} %")
+#    print(f"Pressure: {bme280.pressure:0.1f} hPa")
+#    print(f"Altitude: {bme280.altitude:0.2f} meters")
+
+   return (bme280.temperature, bme280.humidity)
+
+def ds18b20():
+   sensor = w1thermsensor.W1ThermSensor()
+   temp = sensor.get_temperature()
+   return temp
+
+def resolve_simulation_day():
+    if SIMULATION_EXTERNAL_TEMPERATURE == SIMULATION_EXTERNAL_TEMPERATURE_MAX:
+        SIMULATION_DAY = False
+    if SIMULATION_EXTERNAL_TEMPERATURE == SIMULATION_EXTERNAL_TEMPERATURE_MIN:
+        SIMULATION_DAY = True
 
 
 def get_external_sensors_data() -> tuple[float, float, float, float]:
     """
-    wiatr, swiatlo, wilgotnosc, temperatura,
+    temperatura, wilgotnosc, wiatr, swiatlo
     """
-    pass
-
+    if SIMULATION_MODE:
+        resolve_simulation_day()
+        if SIMULATION_DAY:
+            SIMULATION_EXTERNAL_TEMPERATURE += 1.0
+            SIMULATION_EXTERNAL_HUMIDITY += 0.01
+            SIMULATION_EXTERNAL_LIGHTING += 100.0
+            SIMULATION_EXTERNAL_WIND += 1.0
+            return SIMULATION_EXTERNAL_TEMPERATURE,SIMULATION_EXTERNAL_HUMIDITY,SIMULATION_EXTERNAL_LIGHTING,SIMULATION_EXTERNAL_WIND
+        else:
+            SIMULATION_EXTERNAL_TEMPERATURE -= 1.0
+            SIMULATION_EXTERNAL_HUMIDITY -= 0.01
+            SIMULATION_EXTERNAL_LIGHTING -= 100.0
+            SIMULATION_EXTERNAL_WIND -= 1.0
+            return SIMULATION_EXTERNAL_TEMPERATURE,SIMULATION_EXTERNAL_HUMIDITY,SIMULATION_EXTERNAL_LIGHTING,SIMULATION_EXTERNAL_WIND
+    else:
+        temp, hum = bme280()
+        return temp, hum, 0.0, 0.0
 
 def get_internal_sensors_data() -> tuple[float, float, float]:
     """
-    swiatlo, wilgotnosc, temperatura,
+    temperatura, wilgotnosc, swiatlo,
     """
-    pass
+    if SIMULATION_MODE:
+        resolve_simulation_day()
+        if SIMULATION_DAY:
+            SIMULATION_INTERNAL_TEMPERATURE += 0.25
+            SIMULATION_INTERNAL_HUMIDITY += 0.01
+            SIMULATION_INTERNAL_LIGHTING += 100.0
+            return SIMULATION_INTERNAL_TEMPERATURE,SIMULATION_INTERNAL_HUMIDITY,SIMULATION_INTERNAL_LIGHTING
+        else:
+            SIMULATION_INTERNAL_TEMPERATURE -= 0.25
+            SIMULATION_INTERNAL_HUMIDITY -= 0.01
+            SIMULATION_INTERNAL_LIGHTING -= 100.0
+            return SIMULATION_INTERNAL_TEMPERATURE,SIMULATION_INTERNAL_HUMIDITY,SIMULATION_INTERNAL_LIGHTING
+    else:
+        temp = ds18b20()
+        return temp, 0.0, 0.0
+
 
 def set_light(wlaczone: bool):
     """
     Jeśli true to włączamy światla ...
     """
-    pass
+    if SIMULATION_MODE:
+        if wlaczone:
+            print('Wlaczam swiatla')
+        else:
+            print('Wylaczam swiatla')
 
 
 def set_windows(otwarte: bool):
     """
     Jeśli true to otwieramy okna ...
     """
-    pass
+    if SIMULATION_MODE:
+        if otwarte:
+            print('Otwieram okna')
+        else:
+            print('Zamykam okna')
