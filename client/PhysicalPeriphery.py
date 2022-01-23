@@ -56,16 +56,16 @@ def resolve_simulation_day():
 
 def print_data_from_external_sensors(temp, hum, light, wind, simulated):
     if simulated:
-        print("Retrieved simulated data from external sensors: temp: " + temp + ", hum: " + hum + ", light: " + light +", wind: " + wind)
+        print("Retrieved simulated data from external sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light) +", wind: " + str(wind))
     else:
-        print("Retrieved data from external sensors: temp: " + temp + ", hum: " + hum + ", light: " + light +", wind: " + wind)
+        print("Retrieved data from external sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light) +", wind: " + str(wind))
     
 
 def print_data_from_internal_sensors(temp, hum, light, simulated):
     if simulated:
-        print("Retrieved simulated data from internal sensors: temp: " + temp + ", hum: " + hum + ", light: " + light)
+        print("Retrieved simulated data from internal sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
     else:
-        print("Retrieved data from internal sensors: temp: " + temp + ", hum: " + hum + ", light: " + light)
+        print("Retrieved data from internal sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
 
 
 def get_external_sensors_data() -> tuple[float, float, float, float]:
