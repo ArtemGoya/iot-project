@@ -25,13 +25,15 @@ def connect_to_broker():
     # Send message about conenction.
     call_worker("Client connected")
 
-def send_data_to_server(temp_external, humidity_external, lighting_external, wind_external, temp_internal, humidity_internal, lighting_internal):
+def send_data_to_server(temp_external, hum_external, light_external, wind_external, temp_internal, hum_internal, light_internal, is_opened_windows, is_light_on):
    client.publish(
         "data_reader/",
         temp_external + "," + 
-        humidity_external + "," + 
+        hum_external + "," + 
         lighting_external + "," + 
         wind_external + "," + 
         temp_internal + "," + 
-        humidity_internal + "," + 
-        lighting_internal)
+        hum_internal + "," + 
+        lighting_internal,
+        is_opened_windows,
+        is_light_on)
