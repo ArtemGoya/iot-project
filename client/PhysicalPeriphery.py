@@ -1,4 +1,5 @@
 """
+    .
     Tu znajdą się metody do interakcji z fizycznymi peryferiami
 """
 SIMULATION_MODE = True
