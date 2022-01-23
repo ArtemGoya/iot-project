@@ -30,10 +30,10 @@ def send_data_to_server(temp_external, hum_external, light_external, wind_extern
         "data_reader/",
         temp_external + "," + 
         hum_external + "," + 
-        lighting_external + "," + 
+        light_external + "," + 
         wind_external + "," + 
         temp_internal + "," + 
         hum_internal + "," + 
-        lighting_internal,
+        light_internal,
         is_opened_windows,
         is_light_on)

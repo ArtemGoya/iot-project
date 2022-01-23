@@ -18,7 +18,7 @@ def process_message(client, userdata, message):
         and message_decoded[0] != "Client disconnected"
     ):
     # temp_external, hum_external, light_external, wind_external, temp_internal, hum_internal, light_internal, is_opened_windows, is_light_on
-        print("Saving data: " + time.ctime() + ", " + 
+        print("Saving data: " + str(time.ctime()) + ", " + 
         str(message_decoded[0]) + "," +
         str(message_decoded[1]) + "," +
         str(message_decoded[2]) + "," +
@@ -27,7 +27,7 @@ def process_message(client, userdata, message):
         str(message_decoded[5]) + "," +
         str(message_decoded[6]) + "," +
         str(message_decoded[7]) + "," +
-        str(message_decoded[8])
+        str(message_decoded[8]))
 
         # Save to sqlite database.
         connention = sqlite3.connect("database.db")
