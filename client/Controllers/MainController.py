@@ -1,4 +1,3 @@
-from graphviz import view
 from Services.GalleryManagerService import GelleryManagerService, Okna, Swiatla
 from Views.MainView import MainView
 from PhysicalPeriphery import *
