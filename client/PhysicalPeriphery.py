@@ -51,10 +51,12 @@ def bme280():
 
    return (bme280.temperature, bme280.humidity)
 
+
 def ds18b20():
    sensor = w1thermsensor.W1ThermSensor()
    temp = sensor.get_temperature()
    return temp
+
 
 def resolve_simulation_day():
     global SIMULATION_DAY
@@ -63,18 +65,23 @@ def resolve_simulation_day():
     if SIMULATION_EXTERNAL_TEMPERATURE == SIMULATION_EXTERNAL_TEMPERATURE_MIN:
         SIMULATION_DAY = True
 
+
 def print_data_from_external_sensors(temp, hum, light, wind, simulated):
     if simulated:
-        print("Retrieved simulated data from external sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light) +", wind: " + str(wind))
+        print("Retrieved simulated data from external sensors: temp: " + str(temp) +
+              ", hum: " + str(hum) + ", light: " + str(light) + ", wind: " + str(wind))
     else:
-        print("Retrieved data from external sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light) +", wind: " + str(wind))
-    
+        print("Retrieved data from external sensors: temp: " + str(temp) +
+              ", hum: " + str(hum) + ", light: " + str(light) + ", wind: " + str(wind))
+
 
 def print_data_from_internal_sensors(temp, hum, light, simulated):
     if simulated:
-        print("Retrieved simulated data from internal sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
+        print("Retrieved simulated data from internal sensors: temp: " +
+              str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
     else:
-        print("Retrieved data from internal sensors: temp: " + str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
+        print("Retrieved data from internal sensors: temp: " +
+              str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
 
 
 def get_external_sensors_data() -> tuple[float, float, float, float]:
@@ -85,7 +92,7 @@ def get_external_sensors_data() -> tuple[float, float, float, float]:
     global SIMULATION_EXTERNAL_HUMIDITY
     global SIMULATION_EXTERNAL_LIGHTING
     global SIMULATION_EXTERNAL_WIND
-    
+
     if SIMULATION_MODE:
         resolve_simulation_day()
         if SIMULATION_DAY:
@@ -98,12 +105,14 @@ def get_external_sensors_data() -> tuple[float, float, float, float]:
             SIMULATION_EXTERNAL_HUMIDITY -= SIMULATION_EXTERNAL_HUMIDITY_CHANGE
             SIMULATION_EXTERNAL_LIGHTING -= SIMULATION_EXTERNAL_LIGHTING_CHANGE
             SIMULATION_EXTERNAL_WIND -= SIMULATION_EXTERNAL_WIND_CHANGE
-        print_data_from_external_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_WIND, SIMULATION_EXTERNAL_LIGHTING, True)
+        print_data_from_external_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY,
+                                         SIMULATION_EXTERNAL_WIND, SIMULATION_EXTERNAL_LIGHTING, True)
         return SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_WIND, SIMULATION_EXTERNAL_LIGHTING
     else:
         temp, hum = bme280()
         print_data_from_external_sensors(temp, hum, 0.0, 0.0, False)
         return temp, hum, 0.0, 0.0
+
 
 def get_internal_sensors_data() -> tuple[float, float, float]:
     """
@@ -112,7 +121,7 @@ def get_internal_sensors_data() -> tuple[float, float, float]:
     global SIMULATION_INTERNAL_TEMPERATURE
     global SIMULATION_INTERNAL_HUMIDITY
     global SIMULATION_INTERNAL_LIGHTING
-    
+
     if SIMULATION_MODE:
         resolve_simulation_day()
         if SIMULATION_DAY:
@@ -123,8 +132,9 @@ def get_internal_sensors_data() -> tuple[float, float, float]:
             SIMULATION_INTERNAL_TEMPERATURE -= SIMULATION_INTERNAL_TEMPERATURE_CHANGE
             SIMULATION_INTERNAL_HUMIDITY -= SIMULATION_INTERNAL_HUMIDITY_CHANGE
             SIMULATION_INTERNAL_LIGHTING -= SIMULATION_INTERNAL_LIGHTING_CHANGE
-        print_data_from_internal_sensors(SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_LIGHTING, True)
-        return SIMULATION_INTERNAL_TEMPERATURE,SIMULATION_INTERNAL_HUMIDITY,SIMULATION_INTERNAL_LIGHTING
+        print_data_from_internal_sensors(
+            SIMULATION_EXTERNAL_TEMPERATURE, SIMULATION_EXTERNAL_HUMIDITY, SIMULATION_EXTERNAL_LIGHTING, True)
+        return SIMULATION_INTERNAL_TEMPERATURE, SIMULATION_INTERNAL_HUMIDITY, SIMULATION_INTERNAL_LIGHTING
     else:
         temp = ds18b20()
         print_data_from_internal_sensors(temp, 0.0, 0.0, False)
