@@ -93,7 +93,7 @@ def print_data_from_internal_sensors(temp, hum, light, simulated):
               str(temp) + ", hum: " + str(hum) + ", light: " + str(light))
 
 
-def get_external_sensors_data() -> tuple[float, float, float, float]:
+def get_external_sensors_data():
     """
     temperatura, wilgotnosc, wiatr, swiatlo
     """
@@ -126,7 +126,7 @@ def get_external_sensors_data() -> tuple[float, float, float, float]:
         return temp, hum, 0.0, 0.0
 
 
-def get_internal_sensors_data() -> tuple[float, float, float]:
+def get_internal_sensors_data():
     """
     temperatura, wilgotnosc, swiatlo,
     """
