@@ -39,7 +39,7 @@ class MainServerView(Frame):
         self.parent.rowconfigure(2, weight=1)
 
     def gallery(self):
-        self.color = "#d2f7f4"
+        self.color = "#E0E0E0"
 
         self.createLayout()
 
