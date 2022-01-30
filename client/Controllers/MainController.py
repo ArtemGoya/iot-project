@@ -26,7 +26,7 @@ class MainController():
 
         self.view.set_sensors_data(
             in_temperatura, in_wilgotnosc, in_jasnosc,
-            out_temperatura, out_wilgotnosc, out_wiatr, out_jasnosc,
+            out_temperatura, out_wilgotnosc, out_jasnosc, out_wiatr,
             self.galery_manager.get_okna_otwarte(),
             self.galery_manager.get_swiatla_wlaczone()
         )
