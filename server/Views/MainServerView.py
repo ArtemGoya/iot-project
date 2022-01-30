@@ -2,9 +2,11 @@
 
 from tkinter import *
 from tkinter import ttk
+from tkinter import font
 import tkinter.messagebox
 from tkinter.constants import NSEW
 import configparser
+from turtle import bgcolor
 
 LOOP_INTERVAL = 1_000
 # CONFIG = "m_config.txt"
@@ -94,7 +96,7 @@ class MainServerView(Frame):
                              text="Galeria handlowa Amber", font=("Helvetica", 19), bg="#fff")
         nameValLabel.pack(side=LEFT)
         detailsButton = Button(clientFrame, text="Szczegóły", font=("Helvetica", 20), height=1, width=12,
-                                    bg=self.color,)
+                                    bg=self.color,command=self.show_details)
         detailsButton.pack(side=RIGHT, padx=30)
     # Creates status bar
 
@@ -161,3 +163,72 @@ class MainServerView(Frame):
         self.robocze.grid(row=1, column=0, columnspan=1,
                           rowspan=1, sticky=NSEW)
         pass
+    
+    #szczegóły wybranej galerii
+    def show_details(self):
+        
+        rank_list = []
+        top = Toplevel()
+            
+        top.geometry("1400x1000+204+118")
+        top.resizable(width=False, height=False)
+        title = Frame(top, height=100, background="#fff")
+        title.pack(fill=X, expand=False)
+        title.pack_propagate(0)
+        titleVal = Label(title, height=4, text="Galeria handlowa Amber", font=(
+            "Helvetica", 25), bg="#fff")
+        titleVal.pack(fill=None, expand=False)
+        
+        game_frame = Frame(top, height=800,width=1330, background=self.color)
+        game_frame.pack(fill=None, expand=False)
+        game_frame.pack_propagate(0)
+        
+        game_scroll = Scrollbar(game_frame)
+        game_scroll.pack(side=RIGHT, fill=Y)
+        
+        
+        
+        my_game = ttk.Treeview(game_frame, yscrollcommand=game_scroll.set, height=800)
+        style = ttk.Style()
+        style.theme_use("default")
+        style.configure("Treeview", font=("Helvetica", 12))
+        style.configure("Treeview.Heading", background="#C0C0C0", font=("Helvetica", 12,))
+        
+        my_game.pack()
+        my_game.pack_propagate(0)
+        game_scroll.config(command=my_game.yview)
+
+        my_game['columns'] = ('tmp_in', 'hum_in', 'light_in', 'tmp_out', 'hum_out', "light_out", "wind", "windows","lighting","time")
+
+        my_game.column("#0", width=0,  stretch=NO)
+        my_game.column("tmp_in",anchor=CENTER, width=140)
+        my_game.column("hum_in",anchor=CENTER,width=130)
+        my_game.column("light_in",anchor=CENTER,width=150)
+        my_game.column("tmp_out",anchor=CENTER,width=130)
+        my_game.column("hum_out",anchor=CENTER,width=120)
+        my_game.column("light_out",anchor=CENTER,width=150)
+        my_game.column("wind",anchor=CENTER,width=100)
+        my_game.column("windows",anchor=CENTER,width=120)
+        my_game.column("lighting",anchor=CENTER,width=130)
+        my_game.column("time",anchor=CENTER,width=140)
+
+        my_game.heading("#0",text="",anchor=CENTER)
+        my_game.heading("tmp_in",text="Temp. wewn. [*C]",anchor=CENTER)
+        my_game.heading("hum_in",text="Wilg. wewn. [%]",anchor=CENTER)
+        my_game.heading("light_in",text="Jasnosć wewn. [lux]",anchor=CENTER)
+        my_game.heading("tmp_out",text="Temp. zewn. [*C]",anchor=CENTER)
+        my_game.heading("hum_out",text="Wilg. zwen. [%]",anchor=CENTER)
+        my_game.heading("light_out",text="Jasnosć zewn. [lux]",anchor=CENTER)
+        my_game.heading("wind",text="Wiatr [m/s]",anchor=CENTER)
+        my_game.heading("windows",text="Stan okiennic",anchor=CENTER)
+        my_game.heading("lighting",text="Stan oświetlenia",anchor=CENTER)
+        my_game.heading("time",text="Czas",anchor=CENTER)
+        
+        for i in range(100):
+            my_game.insert(parent='',index='end',iid=i,text='',
+            values=('20.0','25','350','5.4', '45', '150', '3', 'Zamknięte', 'Włączone', '12/10/2021 16:3'+str(i)))
+            
+
+        
+        
+            
