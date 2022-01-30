@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
-import sqlite3
 import time
+import database
 
 # The broker name or IP address.
 broker = "localhost"
@@ -10,6 +10,8 @@ client = mqtt.Client()
 
 def process_message(client, userdata, message):
     # Decode message.
+    # database.save_measure(message)
+
     message_decoded = (str(message.payload.decode("utf-8"))).split(",")
 
     # Print message to console.
@@ -30,25 +32,25 @@ def process_message(client, userdata, message):
         str(message_decoded[8]))
 
         # Save to sqlite database.
-        connention = sqlite3.connect("database.db")
-        cursor = connention.cursor()
-        cursor.execute(
-            "INSERT INTO pomiary VALUES (?,?,?,?,?,?,?,?,?)",
-            (time.ctime(),
-            message_decoded[0],
-            message_decoded[1],
-            message_decoded[2],
-            message_decoded[3],
-            message_decoded[4],
-            message_decoded[5],
-            message_decoded[6],
-            message_decoded[7],
-            message_decoded[8]),
-        )
-        connention.commit()
-        connention.close()
-    else:
-        print(message_decoded[0] + " : " + message_decoded[1])
+    #     connention = sqlite3.connect("database.db")
+    #     cursor = connention.cursor()
+    #     cursor.execute(
+    #         "INSERT INTO pomiary VALUES (?,?,?,?,?,?,?,?,?)",
+    #         (time.ctime(),
+    #         message_decoded[0],
+    #         message_decoded[1],
+    #         message_decoded[2],
+    #         message_decoded[3],
+    #         message_decoded[4],
+    #         message_decoded[5],
+    #         message_decoded[6],
+    #         message_decoded[7],
+    #         message_decoded[8]),
+    #     )
+    #     connention.commit()
+    #     connention.close()
+    # else:
+    #     print(message_decoded[0] + " : " + message_decoded[1])
 
 def connect_to_broker():
     # Connect to the broker.
@@ -57,7 +59,7 @@ def connect_to_broker():
     client.on_message = process_message
     # Starts client and subscribe.
     client.loop_start()
-    client.subscribe("data_reader/")
+    client.subscribe("galery_data/+")
 
 def disconnect_from_broker():
     # Disconnet the client.
@@ -69,4 +71,4 @@ def run_receiver():
     # create_main_window()
     # Start to display window (It will stay here until window is displayed)
     # window.mainloop()
-    disconnect_from_broker()
+    # disconnect_from_broker()

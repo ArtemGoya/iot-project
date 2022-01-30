@@ -31,6 +31,7 @@ def connect_to_broker():
 def send_data_to_server(temp_external, hum_external, light_external, wind_external, temp_internal, hum_internal, light_internal, is_opened_windows, is_light_on):
     client.publish(
         "galery_data/" + str(GALLERY_ID),
+        str(GALLERY_ID) + "," +
         str(temp_external) + "," +
         str(hum_external) + "," +
         str(light_external) + "," +

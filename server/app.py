@@ -1,4 +1,5 @@
 import database as db
+import MqttReceiver
 
 from tkinter import *
 from Views.MainServerView import MainServerView
@@ -9,7 +10,11 @@ if __name__ == '__main__':
     root = Tk()
     root.title("System monitorowania środowisk galerii")
 
+    db.create_database()
+    db.seed_database
+
     view = MainServerView(root)
+    MqttReceiver.run_receiver()
 
     def loop():
         print("main loop tick")
