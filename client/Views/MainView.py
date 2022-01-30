@@ -85,7 +85,7 @@ class MainView(Frame):
         self.outLightValLabel.config(text=str(f'{out_jasnosc:.2f} lux'))
 
     def gallery(self):
-        self.color = "SystemButtonFace"
+        self.color = "#F0F0F0"
 
         self.createLayout()
 
