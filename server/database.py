@@ -39,8 +39,8 @@ def get_gallery_measurements(galery_id: int):
     cursor = connection.cursor()
     cursor.execute("""
             SELECT * FROM pomiary
-            WHERE Galeria_id = ?;
-        """, (galery_id))
+            WHERE Galeria_id = :id;
+        """, {"id": galery_id})
     return cursor.fetchall()
 
 
@@ -76,6 +76,7 @@ def seed_database():
     #9 str(is_light_on))
 
 def save_measure(message: str):
+    connection = sqlite3.connect("iot.db")
     parameters = (message.split(","))
     cursor = connection.cursor()
     cursor.execute("INSERT INTO pomiary VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)",
@@ -83,6 +84,7 @@ def save_measure(message: str):
                     parameters[6],parameters[2],parameters[7],parameters[3],
                     parameters[4],eval(parameters[8]),eval(parameters[9])))
     connection.commit()
+    connection.close()
     
     
 

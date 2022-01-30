@@ -9,9 +9,10 @@ broker = "localhost"
 client = mqtt.Client()
 
 def process_message(client, userdata, message):
+
     # Decode message.
     # database.save_measure(message)
-
+    database.save_measure(str(message.payload.decode("utf-8")))
     message_decoded = (str(message.payload.decode("utf-8"))).split(",")
 
     # Print message to console.
@@ -32,7 +33,7 @@ def process_message(client, userdata, message):
         str(message_decoded[8]))
 
         # Save to sqlite database.
-    #     connention = sqlite3.connect("database.db")
+    #     connention = sqlite3.connect("iot.db")
     #     cursor = connention.cursor()
     #     cursor.execute(
     #         "INSERT INTO pomiary VALUES (?,?,?,?,?,?,?,?,?)",
