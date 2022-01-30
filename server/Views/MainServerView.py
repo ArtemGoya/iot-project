@@ -168,7 +168,7 @@ class MainServerView(Frame):
                           rowspan=1, sticky=NSEW)
         pass
 
-    def on_details_close(self,top):
+    def on_details_close(self, top):
         self.__details_table = None
         top.destroy()
 
@@ -245,14 +245,13 @@ class MainServerView(Frame):
             "lighting", text="Stan oświetlenia", anchor=CENTER)
         self.__details_table.heading("time", text="Czas", anchor=CENTER)
 
-
     def load_table_items(self):
         measurements = db.get_gallery_measurements(self.__galery_id)
         #(id, g_id, )
         #(1, 1, '2022-01-30 20:43:54', 18.4, 15, 55, 55, 250, 900, 5, 1, 1)
         for m in measurements:
             okiennice = "otwarte" if m[10] else "zamkniete"
-            swiatlo = "wlaczone" if m[10] else "wylaczone"
+            swiatlo = "wlaczone" if m[11] else "wylaczone"
             self.__details_table.insert(parent='', index='end', iid=m[0], text='',
                                         values=("{:.2f}".format(m[3]), m[5], m[7], m[4], m[6], m[8], m[9], okiennice, swiatlo, m[2]))
 
