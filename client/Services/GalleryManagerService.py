@@ -1,7 +1,7 @@
 import time
 from PhysicalPeriphery import *
 from enum import Enum
-#import Services.MqttClientService as mqtt_client
+import Services.MqttClientService as mqtt_client
 
 # tryby otwarcia okna
 
@@ -27,6 +27,9 @@ class GelleryManagerService():
     """
 
     def __init__(self):
+        mqtt_client.connect_to_broker()
+        # mqtt_client.call_worker("Test name")
+
         self.callbacks = []
         self.__swiatla_wlaczone = False
         self.__okna_otwarte = False
@@ -133,6 +136,18 @@ class GelleryManagerService():
                 self.ustaw_okna(otwarte=True)
 
         # mozna tu wysylac dane przez mqtt
+        mqtt_client.send_data_to_server(
+            hum_external=out_wilgotnosc,
+            hum_internal=in_wilgotnosc,
+            temp_external=out_temperatura,
+            temp_internal=in_temperatura,
+            wind_external=out_wiatr,
+            is_light_on=self.get_swiatla_wlaczone(),
+            is_opened_windows=self.get_swiatla_wlaczone(),
+            light_external=out_jasnosc,
+            light_internal=in_jasnosc
+            )
+
 
         for fn in self.callbacks:
             fn()
