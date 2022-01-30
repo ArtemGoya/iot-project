@@ -22,13 +22,13 @@ class MainController():
         Metoda wywoływana gdy zaktualizowal sie stan galerii
         """
         in_temperatura, in_wilgotnosc, in_jasnosc = get_internal_sensors_data()
-        out_temperatura, out_wilgotnosc, out_wiatr, out_jasnosc = get_external_sensors_data()
+        out_temperatura, out_wilgotnosc, out_jasnosc, out_wiatr = get_external_sensors_data()
 
         self.view.set_sensors_data(
             in_temperatura, in_wilgotnosc, in_jasnosc,
-            out_temperatura, out_wilgotnosc, out_wiatr, out_jasnosc,
+            out_temperatura, out_wilgotnosc, out_jasnosc, out_wiatr,
             self.galery_manager.get_okna_otwarte(),
             self.galery_manager.get_swiatla_wlaczone()
         )
 
-        print("Jestem w konrolerze")
+        # print("Jestem w konrolerze")

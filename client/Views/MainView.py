@@ -66,14 +66,14 @@ class MainView(Frame):
         Sluzy do aktualizacji na widoku informacji o stanie czujnikow
         """
         if swiatla_wlaczone:
-            self.lightingStateValLabel.config(text="WLACZONE")
+            self.lightingStateValLabel.config(text="WLACZONE",fg="#00FF00")
         else:
-            self.lightingStateValLabel.config(text="WYLACZONE")
+            self.lightingStateValLabel.config(text="WYLACZONE",fg="#FF0000")
 
         if okna_otwarte:
-            self.windowsStateValLabel.config(text="OTWARTE")
+            self.windowsStateValLabel.config(text="OTWARTE", fg="#00FF00")
         else:
-            self.windowsStateValLabel.config(text="ZAMKNIETE")
+            self.windowsStateValLabel.config(text="ZAMKNIETE",fg="#FF0000")
 
         self.inTempValLabel.config(text=str(f'{in_temperatura:.2f} °C'))
         self.inHumValLabel.config(text=str(f'{in_wilgotnosc:.2f} %'))

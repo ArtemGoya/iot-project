@@ -2,7 +2,6 @@ from tkinter import *
 from Controllers.MainController import MainController
 from Views.MainView import MainView
 from Services.GalleryManagerService import GelleryManagerService
-from BasicGui import BasicGui
 
 LOOP_INTERVAL = 500
 
