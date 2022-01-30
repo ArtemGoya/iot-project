@@ -1,3 +1,4 @@
+import time
 from PhysicalPeriphery import *
 from enum import Enum
 #import Services.MqttClientService as mqtt_client
@@ -31,6 +32,12 @@ class GelleryManagerService():
         self.__okna_otwarte = False
         self.__tryb_swiatel = Swiatla.AUTO
         self.__tryb_okien = Okna.AUTO
+
+        self.__swiatla_ost_zmiana = time.time()
+        self.__okna_ost_zmiana = time.time()
+
+        self.__debounce_okna = 3
+        self.__debounce_swiatla = 3
 
         self.__maksymalna_jasnosc_w_srodku = 300
         self.__minimalna_jasnosc_w_srodku = 200
@@ -75,6 +82,18 @@ class GelleryManagerService():
     def subscribe_state_changded(self, callback):
         self.callbacks.append(callback)
 
+    def ustaw_okna(self, otwarte: bool):
+        if self.__debounce_okna < time.time() - self.__okna_ost_zmiana:
+            set_windows(otwarte=otwarte)
+            self.__okna_otwarte = otwarte
+            self.__okna_ost_zmiana = time.time()
+
+    def ustaw_swiatla(self, wlaczone: bool):
+        if self.__debounce_swiatla < time.time() - self.__swiatla_ost_zmiana:
+            set_light(wlaczone=wlaczone)
+            self.__swiatla_wlaczone = wlaczone
+            self.__swiatla_ost_zmiana = time.time()
+
     def loop(self):
         """
         tu poleci logika zarzadania peryferiami
@@ -87,11 +106,9 @@ class GelleryManagerService():
         # logika automatycznego wł/wył świateł
         if self.__tryb_swiatel == Swiatla.AUTO:
             if self.__swiatla_wlaczone == True and self.__maksymalna_jasnosc_w_srodku < in_jasnosc:
-                set_light(wlaczone=False)
-                self.__swiatla_wlaczone = False
+                self.ustaw_swiatla(wlaczone=False)
             elif self.__minimalna_jasnosc_w_srodku > in_jasnosc:
-                set_light(wlaczone=True)
-                self.__swiatla_wlaczone = True
+                self.ustaw_swiatla(wlaczone=True)
 
         # logika otwierania/zamykania okiennic
         if self.__tryb_okien == Okna.AUTO:
@@ -110,12 +127,10 @@ class GelleryManagerService():
                     and out_wilgotnosc < in_wilgotnosc
             ):
                 if self.__okna_otwarte == True:
-                    set_windows(otwarte=False)
-                    self.__okna_otwarte = False
+                    self.ustaw_okna(otwarte=False)
             # w innym wypadku staramy się trzymać okna otwarte
             elif self.__okna_otwarte == False:
-                set_windows(otwarte=True)
-                self.__okna_otwarte = True
+                self.ustaw_okna(otwarte=True)
 
         # mozna tu wysylac dane przez mqtt
 
