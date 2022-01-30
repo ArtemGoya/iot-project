@@ -29,8 +29,8 @@ class GelleryManagerService():
         self.callbacks = []
         self.__swiatla_wlaczone = False
         self.__okna_otwarte = False
-        self.__tryb_swiatel = Swiatla.WYLOCZAONE
-        self.__tryb_okien = Okna.ZAMKNIETE
+        self.__tryb_swiatel = Swiatla.AUTO
+        self.__tryb_okien = Okna.AUTO
 
         self.__maksymalna_jasnosc_w_srodku = 300
         self.__minimalna_jasnosc_w_srodku = 200
@@ -79,7 +79,7 @@ class GelleryManagerService():
         """
         tu poleci logika zarzadania peryferiami
         """
-        print("Galeryy menager loop")
+        # print("Galeryy menager loop")
 
         in_temperatura, in_wilgotnosc, in_jasnosc = get_internal_sensors_data()
         out_temperatura, out_wilgotnosc, out_wiatr, out_jasnosc = get_external_sensors_data()
@@ -96,11 +96,11 @@ class GelleryManagerService():
         # logika otwierania/zamykania okiennic
         if self.__tryb_okien == Okna.AUTO:
             # warunki zamknięcia okna
-            if self.__okna_otwarte == True and (                                # gdy okna są otwarte i
+            if (
                     # wiatr jest za silny
                     self.__max_wiatr < out_wiatr
                     # lub temperatura zewn jest za niska
-                    or self.__min_temperatura_zewn < out_temperatura
+                    or self.__min_temperatura_zewn > out_temperatura
                     # temperatura wewn jest niższa od docelowej
                     or self.__temperatura_docelowa > in_temperatura
                     # i temperatura na zewnątrz jest niższa niż w środku
@@ -109,12 +109,13 @@ class GelleryManagerService():
                     or self.__wilg_docelowa > in_wilgotnosc
                     and out_wilgotnosc < in_wilgotnosc
             ):
-                set_windows(otwarte=False)
-                self.__okna_otwarte = False
+                if self.__okna_otwarte == True:
+                    set_windows(otwarte=False)
+                    self.__okna_otwarte = False
             # w innym wypadku staramy się trzymać okna otwarte
             elif self.__okna_otwarte == False:
-                set_light(wlaczone=True)
-                self.__swiatla_wlaczone = True
+                set_windows(otwarte=True)
+                self.__okna_otwarte = True
 
         # mozna tu wysylac dane przez mqtt
 
