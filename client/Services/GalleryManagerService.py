@@ -143,7 +143,7 @@ class GelleryManagerService():
             temp_internal=in_temperatura,
             wind_external=out_wiatr,
             is_light_on=self.get_swiatla_wlaczone(),
-            is_opened_windows=self.get_swiatla_wlaczone(),
+            is_opened_windows=self.get_okna_otwarte(),
             light_external=out_jasnosc,
             light_internal=in_jasnosc
             )
